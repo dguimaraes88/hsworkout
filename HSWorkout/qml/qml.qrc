@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/fonts/MyriadPro-Bold.otf</file>
+        <file>assets/fonts/MyriadPro-It.otf</file>
+        <file>assets/fonts/MyriadPro-Regular.otf</file>
+        <file>assets/fonts/MyriadPro-Semibold.otf</file>
+        <file>main.qml</file>
+        <file>views/MainView.qml</file>
+        <file>assets/imgs/appBackground.png</file>
+        <file>assets/icons/icon-home.png</file>
+        <file>views/AppButtonDefault.qml</file>
+        <file>assets/icons/barbell.png</file>
+    </qresource>
+</RCC>
