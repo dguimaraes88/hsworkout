@@ -9,35 +9,30 @@ import "views"
 ApplicationWindow {
     id: _root
     visible: true
-    width: Screen.width
-    height: Screen.height
-    visibility: Window.FullScreen
+    width: 393
+    height: 873
+    //visibility: Window.FullScreen
     title: qsTr("HSWorkout")
 
     // Control Flags
     property bool mainviewIsReady: false
 
     //Fonts
-    property alias font_myriadPro_regular: _myriadPro_regular.name
-    property alias font_myriadPro_italic: _myriadPro_italic.name
-    property alias font_myriadPro_semibold: _myriadPro_semibold.name
-    property alias font_myriadPro_bold: _myriadPro_bold.name
+    property alias font_orbitron_regular: _orbitron_regular.name
+    property alias font_orbitron_semibold: _orbitron_semibold.name
+    property alias font_orbitron_bold: _orbitron_bold.name
 
     FontLoader {
-        id: _myriadPro_regular
-        source: "qrc:/assets/fonts/MyriadPro-Regular.otf"
+        id: _orbitron_regular
+        source: "qrc:/assets/fonts/Orbitron-Regular.ttf"
     }
     FontLoader {
-        id: _myriadPro_italic
-        source: "qrc:/assets/fonts/MyriadPro-It.otf"
+        id: _orbitron_semibold
+        source: "qrc:/assets/fonts/Orbitron-SemiBold.ttf"
     }
     FontLoader {
-        id: _myriadPro_semibold
-        source: "qrc:/assets/fonts/MyriadPro-Semibold.otf"
-    }
-    FontLoader {
-        id: _myriadPro_bold
-        source: "qrc:/assets/fonts/MyriadPro-Bold.otf"
+        id: _orbitron_bold
+        source: "qrc:/assets/fonts/Orbitron-Bold.ttf"
     }
 
     Rectangle {
@@ -47,12 +42,12 @@ ApplicationWindow {
 
     Image {
         id: backgroundImage
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.horizontalCenter: parent.horizontalCenter
+        opacity: !mainviewIsReady ? 0.8 : 1
+        Behavior on opacity {OpacityAnimator{}}
+        anchors.fill: parent
         asynchronous: true
         source: "qrc:/assets/imgs/appBackground.png"
-        fillMode: Image.PreserveAspectFit
+        fillMode: Image.PreserveAspectCrop
         layer.enabled: !mainviewIsReady
         layer.effect: FastBlur {
             anchors.fill: backgroundImage
@@ -64,11 +59,13 @@ ApplicationWindow {
         id: halterIcon
         opacity: !mainviewIsReady ? 1 : 0
         Behavior on opacity {OpacityAnimator{}}
-        width: 328
+        width: 128
         anchors.centerIn: parent
+        anchors.verticalCenterOffset: 64
         asynchronous: true
         source: "qrc:/assets/icons/barbell.png"
         fillMode: Image.PreserveAspectFit
+
 
         SequentialAnimation {
             running: true
@@ -102,18 +99,31 @@ ApplicationWindow {
         }
     }
 
+    Text {
+        opacity: !mainviewIsReady ? 1 : 0
+        Behavior on opacity {OpacityAnimator{}}
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset: -128
+        font.pixelSize: 52
+        font.family: font_orbitron_bold
+        font.bold: true
+        color: "white"
+        text: "HSWorkout"
+        style: Text.Outline ; styleColor: "black"
+    }
+
     Timer {
         id: loadingTime
         interval: 2000
         running: true
         repeat: false
-        onTriggered: mainviewIsReady = true
+        onTriggered:  mainviewIsReady = true
     }
 
     Loader {
         id: appLoader
         active: mainviewIsReady
-        anchors.fill: backgroundImage
+        anchors.fill: parent
         source: "qrc:/views/MainView.qml"
     }
 }
