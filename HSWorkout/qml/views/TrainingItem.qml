@@ -11,18 +11,56 @@ Item {
         ListElement {
             trainingName: "Pernas e Glúteos A"
             trainingImg: "qrc:/assets/icons/dumbells.png"
+            exercises: [
+                ListElement {
+                    exerciseName: "Agachamento com Barra"
+                    videoSource : ""
+                    seriesCount : 4
+                    repsCunt: "8 a 10"
+                },
+                ListElement {
+                    exerciseName: "Hip Thrust com Peso"
+                    videoSource : ""
+                    seriesCount : 4
+                    repsCunt: "10"
+                }
+            ]
         }
         ListElement {
             trainingName: "Costas, Peito e Braços"
             trainingImg: "qrc:/assets/icons/dumbells.png"
+            exercises: [
+                ListElement {
+                    exerciseName: ""
+                    videoSource : ""
+                    seriesCount : ""
+                    repsCunt: ""
+                }
+            ]
         }
         ListElement {
             trainingName: "Pernas e Glúteos B"
             trainingImg: "qrc:/assets/icons/dumbells.png"
+            exercises: [
+                ListElement {
+                    exerciseName: ""
+                    videoSource : ""
+                    seriesCount : ""
+                    repsCunt: ""
+                }
+            ]
         }
         ListElement {
             trainingName: "Core + Cardio ou Full Body"
             trainingImg: "qrc:/assets/icons/dumbells.png"
+            exercises: [
+                ListElement {
+                    exerciseName: ""
+                    videoSource : ""
+                    seriesCount : ""
+                    repsCunt: ""
+                }
+            ]
         }
     }
 
@@ -95,7 +133,7 @@ Item {
                         font.pixelSize: 16
                         font.family: font_orbitron_regular
                         color: "white"
-                        text: trainingName + index
+                        text: trainingName
                         Rectangle {
                             anchors.top: parent.bottom
                             anchors.topMargin: 8
@@ -107,11 +145,14 @@ Item {
                             }
                             height: 2
                         }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: currentObject = exercises
+                        }
                     }
                 }
-
             }
-
         }
     }
 }

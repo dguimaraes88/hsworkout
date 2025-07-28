@@ -3,6 +3,7 @@
 #include <QSettings>
 #include <QDir>
 #include <QStandardPaths>
+#include "workoutdatabase.h"
 
 int main(int argc, char *argv[])
 {   
@@ -16,6 +17,10 @@ int main(int argc, char *argv[])
     QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 
     QQmlApplicationEngine engine;
+
+    //Register
+    qmlRegisterType<WorkoutDatabase>("WorkoutDB",1,0,"WorkoutManager");
+
     const QUrl url("qrc:/main.qml");
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
         &app, [url](QObject *obj, const QUrl &objUrl) {

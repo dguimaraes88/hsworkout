@@ -16,5 +16,7 @@
         <file>views/HomeItem.qml</file>
         <file>views/TrainingItem.qml</file>
         <file>assets/icons/dumbells.png</file>
+        <file>views/TrainingModeItem.qml</file>
+        <file>assets/treinos/PlanoTreino.js</file>
     </qresource>
 </RCC>

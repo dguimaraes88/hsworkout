@@ -3,6 +3,8 @@ import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
 import QtMultimedia
 import QtCore
+import "qrc:/assets/treinos/PlanoTreino.js" as Treinos
+//import WorkoutDB 1.0
 
 import "views"
 
@@ -21,6 +23,13 @@ ApplicationWindow {
     property alias font_orbitron_regular: _orbitron_regular.name
     property alias font_orbitron_semibold: _orbitron_semibold.name
     property alias font_orbitron_bold: _orbitron_bold.name
+
+    //Colors
+    property color color_lime: "#f5f919"
+
+    // WorkoutManager {
+    //     id: wkManager
+    // }
 
     FontLoader {
         id: _orbitron_regular

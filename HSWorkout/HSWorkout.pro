@@ -1,8 +1,9 @@
-QT += quick multimedia widgets
+QT += quick multimedia widgets sql
 CONFIG += console
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        workoutdatabase.cpp
 
 resources.files = qml/main.qml 
 resources.prefix = /$${TARGET}
@@ -20,3 +21,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES +=
+
+HEADERS += \
+    workoutdatabase.h

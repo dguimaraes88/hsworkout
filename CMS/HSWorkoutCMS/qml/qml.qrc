@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>../assets/imgs/appBackground.png</file>
+        <file>../assets/fonts/Orbitron-Black.ttf</file>
+        <file>../assets/fonts/Orbitron-Bold.ttf</file>
+        <file>../assets/fonts/Orbitron-ExtraBold.ttf</file>
+        <file>../assets/fonts/Orbitron-Medium.ttf</file>
+        <file>../assets/fonts/Orbitron-Regular.ttf</file>
+        <file>../assets/fonts/Orbitron-SemiBold.ttf</file>
+        <file>CmsBtn.qml</file>
+    </qresource>
+</RCC>
