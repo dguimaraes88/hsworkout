@@ -1,4 +1,5 @@
 # C++ objects and libs
+
 *.slo
 *.lo
 *.o
@@ -6,14 +7,12 @@
 *.la
 *.lai
 *.so
-*.so.*
-*.dll
+!Leap.dll
 *.dylib
 
 # Qt-es
-object_script.*.Release
-object_script.*.Debug
-*_plugin_import.cpp
+
+*.qtc_clangd
 /.qmake.cache
 /.qmake.stash
 *.pro.user
@@ -21,34 +20,54 @@ object_script.*.Debug
 *.qbs.user
 *.qbs.user.*
 *.moc
+*.qmlc
+*.jsc
 moc_*.cpp
 moc_*.h
 qrc_*.cpp
 ui_*.h
-*.qmlc
-*.jsc
 Makefile*
 *build-*
-*.qm
-*.prl
-
-# Qt unit tests
-target_wrapper.*
 
 # QtCreator
+
 *.autosave
 
-# QtCreator Qml
+# QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
 
-# QtCreator CMake
+# QtCtreator CMake
 CMakeLists.txt.user*
 
-# QtCreator 4.8< compilation database
-compile_commands.json
+stuff
+*/stuff
+*/solution/installer/config.iss
+*/solution/installer/Output
+*/solution/build
 
-# QtCreator local machine specific files for imported projects
-*creator.user*
+**/node_modules/
+**/scripts/**/daemon/
 
-*_qmlcache.qrc
+/controller/build/*
+
+*.stackdump
+
+# Vim
+
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
