@@ -1,78 +1,23 @@
 import QtQuick
 import QtQuick.Layouts
+import "qrc:/assets/treinos/PlanoTreino.js" as Treinos
+
 
 Item {
     id: mainView
     anchors.fill: parent
 
-    property int currentView: -1
-    property var currentObject: null
-
-    onCurrentObjectChanged:  {
-        console.log("CURRENT BJECT CHANGED: ", currentObject, typeof(currentObject))
-        currentView = 3
-    }
-
-    onCurrentViewChanged:  {
-        switch(currentView) {
-        case 0:
-            contentLoader.sourceComponent = homeComp
-            break
-        case 1:
-            contentLoader.sourceComponent = trainingComp
-            break
-        case 2:
-            contentLoader.sourceComponent = homeComp
-            break
-
-        case 3:
-            contentLoader.sourceComponent = trainingModeComp
-            break
-        }
-    }
-
-
-    Component.onCompleted: {
-        currentView = 0
-        console.log("TREINOS: ", Treinos, Treinos.treinos, _root.Treinos)
-    }
-
-    Component {
-        id: homeComp
-        HomeItem {
-            id: homeItem
-        }
-    }
-    Component {
-        id: trainingComp
-        TrainingItem {
-            id: trainingItem
-        }
-    }
-    Component {
-        id: trainingModeComp
-        TrainingModeItem {
-            id: trainingModeItem
-        }
-    }
-
-
-    Loader {
-        id: contentLoader
-        width: parent.width
-        height: parent.height
-        asynchronous: true
-        active: true
-        sourceComponent: homeComp
-        onSourceComponentChanged: {
-            contentLoader.item.opacity = 1
-        }
+    function changeContent(obj, view)
+    {
+        root.currentObject = obj
+        root.currentView = view
     }
 
     ColumnLayout {
         id: mainViewButtons
+        spacing: 12
         anchors.top: parent.top
-        anchors.topMargin: 80
+        anchors.topMargin: 100
         anchors.horizontalCenter: parent.horizontalCenter
 
         Repeater {
@@ -86,11 +31,26 @@ Item {
                 border.width: 2
                 Layout.preferredWidth: mainView.width * 0.8
                 Layout.preferredHeight: 35
+
+                Text {
+                    width: parent.width - 20
+                    anchors.centerIn: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 14
+                    font.family: font_orbitron_semibold
+                    color: "white"
+                    text: modelData.treino
+                    fontSizeMode: Text.Fit
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        mainView.changeContent(modelData, 1)
+                    }
+                }
             }
         }
-
     }
-
-
 
 }

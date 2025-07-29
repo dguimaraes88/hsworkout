@@ -3,13 +3,14 @@ import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
 import QtMultimedia
 import QtCore
-import "qrc:/assets/treinos/PlanoTreino.js" as Treinos
+
+
 //import WorkoutDB 1.0
 
 import "views"
 
 ApplicationWindow {
-    id: _root
+    id: root
     visible: true
     width: 393
     height: 873
@@ -18,6 +19,27 @@ ApplicationWindow {
 
     // Control Flags
     property bool mainviewIsReady: false
+    onMainviewIsReadyChanged: if(mainviewIsReady) {
+                                  contentLoader.active = true
+                                  currentView = 0
+                              }
+    property int currentView: -1
+    property var currentObject: null
+
+    onCurrentViewChanged:  {
+        switch(currentView) {
+        case 0:
+            contentLoader.sourceComponent = mainViewComp
+            break
+        case 1:
+            contentLoader.sourceComponent = trainingComp
+            break;
+        case 2:
+            contentLoader.sourceComponent = trainingModeComp
+            break;
+        }
+    }
+
 
     //Fonts
     property alias font_orbitron_regular: _orbitron_regular.name
@@ -51,7 +73,7 @@ ApplicationWindow {
 
     Image {
         id: backgroundImage
-        opacity: !mainviewIsReady ? 0.8 : 1
+        opacity: !mainviewIsReady ? 0.8 : 0.3
         Behavior on opacity {OpacityAnimator{}}
         anchors.fill: parent
         asynchronous: true
@@ -79,7 +101,6 @@ ApplicationWindow {
         SequentialAnimation {
             running: true
             loops :Animation.Infinite
-
 
             NumberAnimation {
                 target: halterIcon
@@ -123,17 +144,87 @@ ApplicationWindow {
 
     Timer {
         id: loadingTime
-        interval: 2000
+        interval: 500
         running: true
         repeat: false
         onTriggered:  mainviewIsReady = true
     }
 
     Loader {
-        id: appLoader
+        id: contentLoader
         active: mainviewIsReady
         anchors.fill: parent
-        source: "qrc:/views/MainView.qml"
+        sourceComponent:  mainViewComp
+        onSourceComponentChanged: {
+            if(contentLoader && contentLoader.item) {
+                contentLoader.item.opacity = 1
+            }
+        }
     }
-}
 
+    Image {
+        id: btnHome
+        opacity: currentView > -1
+        enabled: opacity === 1
+        Behavior on opacity {OpacityAnimator{}}
+        height: 55
+        width: 55
+        fillMode: Image.PreserveAspectFit
+        asynchronous: true
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 28
+        anchors.horizontalCenter: parent.horizontalCenter
+        source: "qrc:/assets/icons/icon-home.png"
+        scale: maX.pressed ? 0.8 : 1
+        MouseArea {
+            id: maX
+            anchors.fill: parent
+            onClicked: {
+                currentView = 0
+                currentObject = null
+            }
+        }
+    }
+
+    Component {
+        id: mainViewComp
+        MainView {
+            id: mainViewItem
+            opacity: 0
+            enabled: opacity === 1
+            Behavior on opacity {NumberAnimation{}}
+        }
+    }
+
+    Component {
+        id: homeComp
+        HomeItem {
+            id: homeItem
+            opacity: 0
+            enabled: opacity === 1
+            Behavior on opacity {NumberAnimation{}}
+        }
+    }
+
+    Component {
+        id: trainingComp
+        TrainingItem {
+            id: trainingItem
+            opacity: 0
+            enabled: opacity === 1
+            Behavior on opacity {NumberAnimation{}}
+        }
+    }
+
+    Component {
+        id: trainingModeComp
+        TrainingModeItem {
+            id: trainingModeItem
+            opacity: 0
+            enabled: opacity === 1
+            Behavior on opacity {OpacityAnimator{}}
+        }
+    }
+
+
+}

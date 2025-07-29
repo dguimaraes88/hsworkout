@@ -1,155 +1,55 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
+
 
 Item {
     id: trainingItem
-    opacity: 0
-    Behavior on opacity {OpacityAnimator{}}
+    anchors.fill: parent
 
-    ListModel {
-        id: listTrainingModel
-        ListElement {
-            trainingName: "Pernas e Glúteos A"
-            trainingImg: "qrc:/assets/icons/dumbells.png"
-            exercises: [
-                ListElement {
-                    exerciseName: "Agachamento com Barra"
-                    videoSource : ""
-                    seriesCount : 4
-                    repsCunt: "8 a 10"
-                },
-                ListElement {
-                    exerciseName: "Hip Thrust com Peso"
-                    videoSource : ""
-                    seriesCount : 4
-                    repsCunt: "10"
-                }
-            ]
+        function changeContent(obj, view)
+        {
+            root.currentObject = obj
+            root.currentView = view
         }
-        ListElement {
-            trainingName: "Costas, Peito e Braços"
-            trainingImg: "qrc:/assets/icons/dumbells.png"
-            exercises: [
-                ListElement {
-                    exerciseName: ""
-                    videoSource : ""
-                    seriesCount : ""
-                    repsCunt: ""
-                }
-            ]
-        }
-        ListElement {
-            trainingName: "Pernas e Glúteos B"
-            trainingImg: "qrc:/assets/icons/dumbells.png"
-            exercises: [
-                ListElement {
-                    exerciseName: ""
-                    videoSource : ""
-                    seriesCount : ""
-                    repsCunt: ""
-                }
-            ]
-        }
-        ListElement {
-            trainingName: "Core + Cardio ou Full Body"
-            trainingImg: "qrc:/assets/icons/dumbells.png"
-            exercises: [
-                ListElement {
-                    exerciseName: ""
-                    videoSource : ""
-                    seriesCount : ""
-                    repsCunt: ""
-                }
-            ]
-        }
-    }
 
-    Text {
-        id: traningTitle
-        anchors.left: parent.left
-        anchors.leftMargin: 16
+    ColumnLayout {
+        id: mainViewButtons
+        spacing: 12
         anchors.top: parent.top
-        anchors.topMargin: 16
-        font.pixelSize: 28
-        font.family: font_orbitron_bold
-        font.bold: true
-        color: "white"
-        text: "Mapa de Treino"
-    }
+        anchors.topMargin: 100
+        anchors.horizontalCenter: parent.horizontalCenter
 
-    Rectangle {
-        id: hLine
-        anchors.top: traningTitle.bottom
-        anchors.topMargin: 8
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        width: 393
-        height: 2
-        gradient: Gradient {
-            orientation: Gradient.Horizontal
-            GradientStop {position: 0; color: "#b9eb01"}
-            GradientStop {position: 0.95; color: "transparent"}
-        }
-    }
+        Repeater {
+            id: mainMenusRepeater
+            model: currentObject ? currentObject.exercicios : []
 
-    Rectangle {
-        id: contentListView
-        clip: true
-        radius: 16
-        anchors.centerIn: trainingItem
-        color: "#DD000000"
-        border.color: "#b9eb01"
-        height: 500
-        width: 380
+            delegate: Rectangle {
+                property var isGroup: modelData.grupo
+                Layout.alignment: Qt.AlignCenter
+                color:  isGroup ?  color_lime : "#80000000"
+                radius: 4
+                border.color: color_lime
+                border.width: 2
+                Layout.preferredWidth: trainingItem.width * 0.8
+                Layout.preferredHeight: 35
 
-        ListView {
-            id: traningList
-            interactive: contentHeight > contentListView.height
-            topMargin: 24
-            anchors.left: parent.left
-            anchors.leftMargin: 24
-            width: parent.width - 24
-            height: parent.height - 24
-            spacing: 16
-            model: listTrainingModel
-            delegate: Column {
-                width: parent.width
+                Text {
+                    anchors.centerIn: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 14
+                    font.family: font_orbitron_semibold
+                    color: isGroup ? "black" : "white"
+                    text: isGroup ? modelData.grupo : modelData.exercicio || ""
+                    fontSizeMode: Text.Fit
+                    width: parent.width - 20
+                }
 
-                Row {
-                    height: 35
-                    spacing: 16
-
-                    Image {
-                        id: tImage
-                        asynchronous: true
-                        source: trainingImg
-                        fillMode: Image.PreserveAspectFit
-                        height: 35
-                        width: 35
-                    }
-
-                    Text {
-                        width: paintedWidth + 24
-                        font.pixelSize: 16
-                        font.family: font_orbitron_regular
-                        color: "white"
-                        text: trainingName
-                        Rectangle {
-                            anchors.top: parent.bottom
-                            anchors.topMargin: 8
-                            width: parent.width
-                            gradient: Gradient {
-                                orientation: Gradient.Horizontal
-                                GradientStop {position: 0; color: "#b9eb01"}
-                                GradientStop {position: 0.95; color: "transparent"}
-                            }
-                            height: 2
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: currentObject = exercises
-                        }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        if(isGroup ) return
+                       trainingItem.changeContent(modelData, 2, currentObject)
                     }
                 }
             }

@@ -2,6 +2,7 @@ import QtQuick
 
 Item {
     id: homeItem
-    opacity: 0
-    Behavior on opacity {OpacityAnimator{}}
+    anchors.fill: parent
+    signal setCurrentObject(var obj)
+    signal setCurrentView(int view)
 }

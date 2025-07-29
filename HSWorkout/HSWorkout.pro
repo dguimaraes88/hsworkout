@@ -1,4 +1,4 @@
-QT += quick multimedia widgets sql
+QT += quick multimedia widgets sql webenginequick
 CONFIG += console
 
 SOURCES += \

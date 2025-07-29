@@ -3,10 +3,12 @@
 #include <QSettings>
 #include <QDir>
 #include <QStandardPaths>
+#include <QtWebEngineQuick/qtwebenginequickglobal.h>
 #include "workoutdatabase.h"
 
 int main(int argc, char *argv[])
-{   
+{
+    QtWebEngineQuick::initialize();
     QApplication app(argc, argv);
     app.setOrganizationName("hsworkout");
     app.setApplicationName("hsworkout");
